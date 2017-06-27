@@ -1,5 +1,5 @@
 # iGEM Tools
-Welcome to the iGEM tools repository created by iGEM UiO. We try to make our everyday easier by creating tools that we believe save us time. We hope that you can share the benefits.
+Welcome to the iGEM tools repository created by iGEM UiO. We hope that you can share the benefits of these tools, that have saved us many hours.
 
 ## Sequence cataloging (Python 3.x)
 This tool was conceved on a summerday session of hard labour, when we needed to find the sequences that may have been similar to one of our parts, the GFP gene.
