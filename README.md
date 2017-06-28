@@ -7,4 +7,4 @@ But, as you may have already seen, the iGEM part registry is, quite frank, a nig
 The rows with the keywords are taken out, and grouped together with the other rows from the same kit. These groups are grouped together with the other kits from that year, and the data is exported into a .csv file.
 This is done automatically for all the years on the name of the .py file. Example: 2009-2017.py will scan through all the kits between 2009 and 2017.
 
-After using this tool, you can use a software like [nucleotide BLAST](blast.ncbi.nlm.nih.gov/Blast.cgi), to align the sequences.
+After using this tool, you can use a software like [nucleotide BLAST](https://blast.ncbi.nlm.nih.gov/Blast.cgi), to align the sequences.
