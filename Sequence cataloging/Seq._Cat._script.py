@@ -15,43 +15,6 @@ def analysis(outlist,row,keywords):
             #     break
     return outlist
 
-def eight(year,keywords):    # 2008
-    # Analysis of the number of kits in registry
-    kit_lo = "Official_Distributions/" + str(year) + "/"  # Kit location
-    num_o_kits = len(next(os.walk(kit_lo))[2])
-    kits = ["%02d" % x for x in range(num_o_kits)]
-    n = 0
-    eightOutlist = []
-    # Register analysis
-    for k in kits:
-        register = "Source Plate 10" + k + ".csv"
-        with open(os.path.join(kit_lo, register), "r") as infile:
-            # eightOutlist.append(k)
-            # Syntax of the csv module
-            reader = csv.reader(infile)
-            for row in reader:
-                myOutlist = analysis(eightOutlist,row,keywords)
-
-    return myOutlist
-
-
-def nineseventeen(year,keywords):    # 2009-2017
-    # Register analysis
-    year = str(year)
-    num_o_kits = len(next(os.walk("Official_Distributions/" + year + "/"))[2])
-    kits = range(1, num_o_kits + 1)
-    nineSeventeenOutlist =[]
-    n=0
-    for n in kits:
-        register = str(year) + " Kit Plate " + str(n) + ".csv"
-        with open(os.path.join("Official_Distributions/" + year + "/", register), "r") as infile:
-            # outlist.append(n)
-            # Syntax of the csv module
-            reader = csv.reader(infile)
-            for row in reader:
-                myOutlist = analysis(nineSeventeenOutlist,row,keywords)  # Using this function to find the relevant sequences
-    return myOutlist
-
 def getOutputName():
     # Name of the result list
     name = input("What would you like the output .csv to be called? ")
@@ -78,15 +41,59 @@ def generateOutlist(name, keyword):
             outlist = nineseventeen(year,keyword)
             writeToFile(name, year, outlist)
 
+def getAllFolders(dest):
+    import glob
+    dirlist = glob.glob(dest)
+    return dirlist
 
-def writeToFile(name, year, outlist):
-    # Generation of the result file
-    with open(name + str(year) + ".csv", "w") as outfile:
-        writer = csv.writer(outfile)
-        for row in outlist:
-            outfile.write("%s\n" % row)
+def getAllFiles():
+    allDirectories = getAllFolders('Official_Distributions/*')
+    allFiles = []
+    for directory in allDirectories:
+        allFiles.append(getAllFolders(directory+'/*'))
+    return allFiles
 
+myAllFiles = getAllFiles()
+
+def getYearNames(allFiles):
+    years = []
+    for files in allFiles:
+        for file in files:
+            years.append(file.split("\\",2)[1])
+    return years
+allYears = getYearNames(myAllFiles)
+
+def cleanYearList(seq):
+    seen = set()
+    seen_add = seen.add
+    return [x for x in seq if not (x in seen or seen_add(x))]
+
+myAllYears = cleanYearList(allYears)
+
+
+
+def makeFlatList(inputList):
+    import itertools
+    merged = list(itertools.chain(*inputList))
+    return merged
+
+def fileManipulator(files, keyword):  # 2008
+    totalOutlist = []
+    allFiles = makeFlatList(files)
+    for file in allFiles:
+        with open(file) as infile:
+            reader = csv.reader(infile)
+            for row in reader:
+                myOutlist = analysis(totalOutlist, row, keyword)
+    return myOutlist
 
 userName = getOutputName()
 userKeyword = getKeyword()
-generateOutlist(userName, userKeyword)
+
+
+
+finalOutList = fileManipulator(myAllFiles, userKeyword)
+with open(userName+".csv","w") as outfile:
+    writer = csv.writer(outfile)
+    for row in finalOutList:
+        outfile.write("%s\n" % row)
