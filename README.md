@@ -8,3 +8,25 @@ The rows with the keywords are taken out, and grouped together with the other ro
 
 
 After using this tool, you can use a software like [nucleotide BLAST](blast.ncbi.nlm.nih.gov/Blast.cgi), to align the sequences.
+
+
+## Seq_Cat_Script_for_2004_2017.py (Python 3.x)
+This tool does a similar job as the previous one, and is not finished yet, but the outputs are usable as of now.
+The tool searches in all the iGEM distribution files for complete iGEM history for the keyword provided by the user, and corresponding rows from all the respective years(files) are extracted and put together in a single file. Here, as of the current functionality, we will not be getting a year-wise distribution of files, but all the data is collected in a single file.
+The following index should be helpful to sort the resultant output file according to years:
+
+Plate ---------------------   Year
+1-4                           2004
+33-40                         2005
+158,159                       2006
+481,482,484                   2007
+620-656                       2008
+681-683                       2009
+1257-1259                     2010
+1621-1626                     2011
+2004-2008                     2012
+2543-2547                     2013
+3085-3088                     2014
+3752-3756                     2015
+4395-4400                     2016
+4989-4995                     2017
